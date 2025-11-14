@@ -1,4 +1,6 @@
-
+html{
+    cursor: url(../img/hammer.ico), default;
+}
 
 section{
     width: 80%;

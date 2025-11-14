@@ -6,12 +6,12 @@ class Mole{
     #element;
     #interval;
 
-    constructor(x,y,container){
+    constructor(x,y,container, interval){
         this.setX(x);
         this.setY(y);
         this.setContainer(container);
         this.cElement();
-
+        this.setInterval(interval)
     }
 
     setX(x) {
@@ -26,28 +26,33 @@ class Mole{
         this.#container = document.querySelector(container);
     }
 
+    setInterval(interval){
+        this.#interval = interval;
+    }
+
     cElement(){
         this.#element = document.createElement("div");
         this.#element.style.left = this.#x + "px";
         this.#element.style.top = this.#y + "px";
-
+        var timeleft = 1000;
         const r = Math.random()*10;
 
-        if (r>8){
-            this.#isMole = 2;
-        }
-        else{
-            this.#isMole = parseInt(Math.random()*2)
-        }
+        
+        this.#isMole = parseInt(Math.random()*10)
+        
 
-        if (this.#isMole === 0){
-            this.#element.classList.add("bomb")
-        } else if (this.#isMole === 1){
+        if (this.#isMole < 8){
             this.#element.classList.add("mole")
+        } else {
+            this.#element.classList.add("bomb")
         }
 
         this.#container.appendChild(this.#element);
         this.#element.addEventListener('click', () => this.collect());
+
+        setTimeout(() => {
+            this.#element.remove();
+        }, timeleft)
     }
 
     remove(){
@@ -56,6 +61,9 @@ class Mole{
 
     collect(){
         this.remove();
-        updateScore((this.#isMole==1)?1:-1)
+        updateScore((this.#isMole<8)?1:-5)
     }
+
+    
+    
 }
